@@ -1,0 +1,22 @@
+<?php
+/** @var \Sutunam\Sentry\Block\Sentry $block */
+
+$releaseValue = $block->getReleaseConfig();
+$projectName = $block->getProjectName();
+$dsn = $block->getDsn();
+$release = $projectName . "@" . $releaseValue;
+?>
+
+<script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Sutunam_Sentry::js/sentry.7.36.min.js')) ?>"
+        integrity="sha384-yOwcO3gcLQCYgPKCSjGSA+KQvWOce9kc/Cjs5LnQhAy+OusjkGgXWkJlA5QxWey7"
+        crossorigin="anonymous"
+></script>
+
+<script>
+    Sentry.init({
+        dsn: <?= /* @noEscape */ '"' . $dsn . '"' ?>,
+        tunnel: "/sentry",
+        release: <?= /* @noEscape */ '"' . $release . '"' ?>,
+        tracesSampleRate: 1.0,
+    });
+</script>

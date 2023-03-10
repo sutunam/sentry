@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="web">
+            <group id="sentry" translate="label" type="text" sortOrder="5"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sentry</label>
+                <field id="project_name" translate="label" type="text" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Project name</label>
+                </field>
+                <field id="version" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Version</label>
+                </field>
+                <field id="dsn" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>DSN</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
