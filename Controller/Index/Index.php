@@ -8,6 +8,7 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
+use GuzzleHttp\Client;
 
 class Index extends Action implements CsrfAwareActionInterface
 {
@@ -18,8 +19,10 @@ class Index extends Action implements CsrfAwareActionInterface
      * @param Client $client
      */
     public function __construct(
-        Context $context
+        Context $context,
+        Client $client
     ) {
+        $this->client = $client;
         parent::__construct($context);
     }
 
