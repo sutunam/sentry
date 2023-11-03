@@ -10,6 +10,14 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use GuzzleHttp\Client;
 
+/**
+ * Proxy to send requests to Sentry
+ * Prevent requests from being blocked by browsers
+ *
+ * https://docs.sentry.io/platforms/javascript/troubleshooting/#dealing-with-ad-blockers
+ * @see view/frontend/templates/sentry.phtml
+ * @see Sentry.init "tunnel" option
+ */
 class Index extends Action implements CsrfAwareActionInterface
 {
     /**
@@ -27,8 +35,6 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * Comment
-     *
      * @param RequestInterface $request
      * @return InvalidRequestException|null
      */
@@ -38,8 +44,6 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * Comment
-     *
      * @param RequestInterface $request
      * @return bool|null
      */
@@ -49,8 +53,6 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * Comment
-     *
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
     public function execute()
