@@ -1,0 +1,5 @@
+image: registry.sutunam.com/sutunam/ci/php_ci:7.1
+
+phpcs:
+  script:
+    - phpcs -s --standard=Magento2 .
