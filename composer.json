@@ -4,7 +4,7 @@
   "keywords": ["magento2", "sentry"],
   "homepage": "https://git.sutunam.com/magento2-extensions/sutunam-sentry",
   "type": "magento2-module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "require": {
     "magento/framework": "~100.0||~101.0||~102.0||~103.0",
     "magento/module-store": "~100.0||~101.0||~102.0||~103.0"
