@@ -11,7 +11,9 @@
 
 namespace Sutunam\Sentry\Block;
 
+use Magento\Framework\App\View\Deployment\Version\Storage\File;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
 class Sentry extends \Magento\Framework\View\Element\Template
@@ -20,49 +22,96 @@ class Sentry extends \Magento\Framework\View\Element\Template
     private const SENTRY_VERSION_CONFIG_PATH = "web/sentry/version";
     private const SENTRY_DSN_CONFIG_PATH = "web/sentry/dsn";
 
+    /** @var File */
+    private File $deployedVersion;
+
+    /** @var ScopeConfigInterface */
+    private ScopeConfigInterface $scopeConfig;
+
     /**
-     * Contructor
+     * Constructor
      *
-     * @param Template\Context $context
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param ScopeConfigInterface $scopeConfig
+     * @param File $deployedVersion
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        ScopeConfigInterface $scopeConfig,
+        File $deployedVersion,
         array $data = []
     ) {
+        $this->deployedVersion = $deployedVersion;
         $this->scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
     }
 
     /**
-     * Comment
+     * Check if required configurations are set
      *
-     * @return mixed
+     * @return bool
      */
-    public function getProjectName()
+    public function canShowTag(): bool
+    {
+        return null !== $this->getProjectName() &&
+            null !== $this->getDsn();
+    }
+
+    /**
+     * Format release string, if release configuration is not set, we use Magento deployed version
+     *
+     * @return string
+     */
+    public function getRelease(): string
+    {
+        $release = $this->getProjectName();
+        if ($config = $this->getReleaseConfig()) {
+            $release .= '@' . $config;
+        } else {
+            $release .= '@' . $this->loadDeployedVersion();
+        }
+
+        return $release;
+    }
+
+    /**
+     * Read pub/static/deployed_version.txt content
+     *
+     * @return string
+     */
+    private function loadDeployedVersion(): string
+    {
+        return $this->deployedVersion->load();
+    }
+
+    /**
+     * Get DSN configuration value
+     *
+     * @return ?string
+     */
+    public function getDsn(): ?string
+    {
+        return $this->scopeConfig->getValue(self::SENTRY_DSN_CONFIG_PATH, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Get project name configuration value
+     *
+     * @return ?string
+     */
+    private function getProjectName(): ?string
     {
         return $this->scopeConfig->getValue(self::SENTRY_PROJECT_NAME_CONFIG_PATH, ScopeInterface::SCOPE_STORE);
     }
 
     /**
-     * Comment
+     * Get release configuration value
      *
-     * @return mixed
+     * @return ?string
      */
-    public function getReleaseConfig()
+    private function getReleaseConfig(): ?string
     {
         return $this->scopeConfig->getValue(self::SENTRY_VERSION_CONFIG_PATH, ScopeInterface::SCOPE_STORE);
-    }
-
-    /**
-     * Comment
-     *
-     * @return mixed
-     */
-    public function getDsn()
-    {
-        return $this->scopeConfig->getValue(self::SENTRY_DSN_CONFIG_PATH, ScopeInterface::SCOPE_STORE);
     }
 }

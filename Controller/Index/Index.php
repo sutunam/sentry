@@ -29,8 +29,6 @@ use GuzzleHttp\Client;
 class Index extends Action implements CsrfAwareActionInterface
 {
     /**
-     * Constructor
-     *
      * @param Context $context
      * @param Client $client
      */
@@ -43,8 +41,7 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * @param RequestInterface $request
-     * @return InvalidRequestException|null
+     * @inheritdoc
      */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
@@ -52,8 +49,7 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * @param RequestInterface $request
-     * @return bool|null
+     * @inheritdoc
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
@@ -61,7 +57,7 @@ class Index extends Action implements CsrfAwareActionInterface
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     * @inheritdoc
      */
     public function execute()
     {

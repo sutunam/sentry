@@ -1,22 +1,29 @@
 <?php
-/** @var \Sutunam\Sentry\Block\Sentry $block */
+/*
+ * Sutunam
+ *
+ * @copyright Copyright (c) 2023 Sutunam (https://www.sutunam.com/)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
-$releaseValue = $block->getReleaseConfig();
-$projectName = $block->getProjectName();
-$dsn = $block->getDsn();
-$release = $projectName . "@" . $releaseValue;
+/** @var \Sutunam\Sentry\Block\Sentry $block */
 ?>
 
-<script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Sutunam_Sentry::js/sentry.7.36.min.js')) ?>"
-        integrity="sha384-yOwcO3gcLQCYgPKCSjGSA+KQvWOce9kc/Cjs5LnQhAy+OusjkGgXWkJlA5QxWey7"
-        crossorigin="anonymous"
-></script>
 
-<script>
-    Sentry.init({
-        dsn: <?= /* @noEscape */ '"' . $dsn . '"' ?>,
-        tunnel: "/sentry",
-        release: <?= /* @noEscape */ '"' . $release . '"' ?>,
-        tracesSampleRate: 1.0,
-    });
-</script>
+<?php if ($block->canShowTag()): ?>
+    <script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Sutunam_Sentry::js/sentry.7.36.min.js')) ?>"
+            integrity="sha384-yOwcO3gcLQCYgPKCSjGSA+KQvWOce9kc/Cjs5LnQhAy+OusjkGgXWkJlA5QxWey7"
+            crossorigin="anonymous"
+    ></script>
+
+    <script>
+     Sentry.init({
+         dsn: <?= /* @noEscape */ '"' . $block->getDsn() . '"' ?>,
+         tunnel: "/sentry",
+         release: <?= /* @noEscape */ '"' . $block->getRelease() . '"' ?>,
+         tracesSampleRate: 1.0,
+     });
+    </script>
+<?php endif; ?>

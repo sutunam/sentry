@@ -1,4 +1,4 @@
-image: registry.sutunam.com/sutunam/ci/php_ci:7.1
+image: registry.sutunam.com/sutunam/ci/php_ci:8.1
 
 phpcs:
   script:
