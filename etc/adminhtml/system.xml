@@ -7,6 +7,19 @@
             <group id="sentry" translate="label" type="text" sortOrder="5"
                 showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Sentry</label>
+                <field id="environment" translate="label" type="text" sortOrder="10" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Environment</label>
+                    <comment>
+                        <![CDATA[
+                                 Required to show script.<br/>
+                                 Sentry
+                                 <a
+                                 href="https://docs.sentry.io/platforms/javascript/configuration/options/#environment"
+                                 target="_blank">environment</a>
+                        ]]>
+                    </comment>
+                </field>
                 <field id="dsn" translate="label" type="text" sortOrder="10" showInDefault="1"
                     showInWebsite="1" showInStore="1" canRestore="1">
                     <label>DSN</label>

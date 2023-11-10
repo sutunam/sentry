@@ -18,6 +18,7 @@ use Magento\Store\Model\ScopeInterface;
 
 class Sentry extends \Magento\Framework\View\Element\Template
 {
+    private const SENTRY_ENVIRONMENT_CONFIG_PATH = "web/sentry/environment";
     private const SENTRY_PROJECT_NAME_CONFIG_PATH = "web/sentry/project_name";
     private const SENTRY_VERSION_CONFIG_PATH = "web/sentry/version";
     private const SENTRY_DSN_CONFIG_PATH = "web/sentry/dsn";
@@ -54,7 +55,8 @@ class Sentry extends \Magento\Framework\View\Element\Template
      */
     public function canShowTag(): bool
     {
-        return null !== $this->getProjectName() &&
+        return null !== $this->getEnvironment() &&
+            null !== $this->getProjectName() &&
             null !== $this->getDsn();
     }
 
@@ -83,6 +85,16 @@ class Sentry extends \Magento\Framework\View\Element\Template
     private function loadDeployedVersion(): string
     {
         return $this->deployedVersion->load();
+    }
+
+    /**
+     * Get environment configuration value
+     *
+     * @return ?string
+     */
+    public function getEnvironment(): ?string
+    {
+        return $this->scopeConfig->getValue(self::SENTRY_ENVIRONMENT_CONFIG_PATH, ScopeInterface::SCOPE_STORE);
     }
 
     /**
