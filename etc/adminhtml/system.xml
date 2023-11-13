@@ -4,10 +4,10 @@
     xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="web">
-            <group id="sentry" translate="label" type="text" sortOrder="5"
+            <group id="sentry" translate="label" type="text" sortOrder="300"
                 showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Sentry</label>
-                <field id="environment" translate="label" type="text" sortOrder="10" showInDefault="1"
+                <field id="environment" translate="label" type="text" sortOrder="0" showInDefault="1"
                     showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Environment</label>
                     <comment>
@@ -30,7 +30,7 @@
                         ]]>
                     </comment>
                 </field>
-                <field id="project_name" translate="label" type="text" sortOrder="10"
+                <field id="project_name" translate="label" type="text" sortOrder="20"
                     showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Project name</label>
                     <comment>
@@ -43,7 +43,7 @@
                         ]]>
                     </comment>
                 </field>
-                <field id="version" translate="label" type="text" sortOrder="10" showInDefault="1"
+                <field id="version" translate="label" type="text" sortOrder="30" showInDefault="1"
                     showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Version</label>
                     <comment>Version used in Sentry versioning. Left empty to use Magento versioning.</comment>
