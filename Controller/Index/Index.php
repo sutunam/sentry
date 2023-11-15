@@ -32,6 +32,7 @@ class Index extends Action implements CsrfAwareActionInterface
     /**
      * @param Context $context
      * @param Client $client
+     * @param RemoteAddress $remoteAddress
      */
     public function __construct(
         Context $context,
