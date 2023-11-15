@@ -4,8 +4,8 @@
     <virtualType name="sentryRemoteAddress" type="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
         <arguments>
             <argument name="alternativeHeaders" xsi:type="array">
-                <item name="forwarded_for" xsi:type="string">X-Forwarded-For</item>
-                <item name="real_ip" xsi:type="string">X-Real-Ip</item>
+                <item name="forwarded_for" xsi:type="string">HTTP_X_FORWARDED_FOR</item>
+                <item name="real_ip" xsi:type="string">HTTP_X_REAL_IP</item>
             </argument>
         </arguments>
     </virtualType>

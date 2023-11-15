@@ -73,9 +73,9 @@ class Index extends Action implements CsrfAwareActionInterface
             $path = explode('://', $header["dsn"])[1];
             $path = explode('/', $path)[1];
             $path = '/' . $path;
-            $project_id = (int) trim($path, "/");
+            $projectId = (int) trim($path, "/");
 
-            $this->client->post("https://$host/api/$project_id/envelope/", [
+            $this->client->post("https://$host/api/$projectId/envelope/", [
                 'headers' => [
                     'Content-Type' => 'application/x-sentry-envelope',
                     'X-Forwarded-For' => $this->remoteAddress->getRemoteAddress()
