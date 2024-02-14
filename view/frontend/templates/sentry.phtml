@@ -26,5 +26,10 @@
          release: <?= /* @noEscape */ '"' . $block->getRelease() . '"' ?>,
          tracesSampleRate: 1.0,
      });
+    <?php if ($block->isCustomerLoggedIn()): ?>
+        Sentry.setUser({
+            id: <?= /* @noEscape */ '"' . $block->getCustomerId() . '"' ?>,
+        });
+    <?php endif; ?>
     </script>
 <?php endif; ?>

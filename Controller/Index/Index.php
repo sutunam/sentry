@@ -30,6 +30,16 @@ use GuzzleHttp\Client;
 class Index extends Action implements CsrfAwareActionInterface
 {
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * @var RemoteAddress
+     */
+    private $remoteAddress;
+
+    /**
      * @param Context $context
      * @param Client $client
      * @param RemoteAddress $remoteAddress
