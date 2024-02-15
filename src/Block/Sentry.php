@@ -40,7 +40,7 @@ class Sentry extends \Magento\Framework\View\Element\Template
      * @param ScopeConfigInterface $scopeConfig
      * @param File $deployedVersion
      * @param Session $customerSession
-     * @param array $data
+     * @param array<mixed> $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,

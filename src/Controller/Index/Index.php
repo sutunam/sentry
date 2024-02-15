@@ -18,6 +18,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use GuzzleHttp\Client;
+use Magento\Framework\App\PlainTextRequestInterface;
 
 /**
  * Proxy to send requests to Sentry
@@ -29,15 +30,11 @@ use GuzzleHttp\Client;
  */
 class Index extends Action implements CsrfAwareActionInterface
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    /** @var Client */
+    private Client $client;
 
-    /**
-     * @var RemoteAddress
-     */
-    private $remoteAddress;
+    /** @var RemoteAddress */
+    private RemoteAddress $remoteAddress;
 
     /**
      * @param Context $context
@@ -76,7 +73,9 @@ class Index extends Action implements CsrfAwareActionInterface
     public function execute()
     {
         $host = "sentry.io";
-        $envelope = $this->getRequest()->getContent();
+        $request = $this->getRequest();
+        /** @var PlainTextRequestInterface $request */
+        $envelope = $request->getContent();
         $pieces = explode("\n", $envelope, 2);
 
         $header = json_decode($pieces[0], true);
@@ -94,5 +93,7 @@ class Index extends Action implements CsrfAwareActionInterface
                 'body' => $envelope
             ]);
         }
+
+        return $this->getResponse();
     }
 }
