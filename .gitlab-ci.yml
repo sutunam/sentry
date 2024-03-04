@@ -10,6 +10,11 @@ default:
       - echo "$auth_json" > auth.json
       - php composer.phar install
 
+copyright:
+  script:
+      - files="$(grep -rL '@copyright.*Sutunam' --include '*.php' src/ || true)";
+      - if [ "$(echo "$files" | sed '/^$/d' | wc -l)" -gt '0' ]; then echo "$files"; exit 1; fi
+
 phpstan:
   script:
       - php composer.phar run phpstan

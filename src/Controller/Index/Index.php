@@ -16,9 +16,9 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
-use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
-use GuzzleHttp\Client;
 use Magento\Framework\App\PlainTextRequestInterface;
+use Magento\Framework\MessageQueue\PublisherInterface;
+use Sutunam\Sentry\Model\Data\SentryRequest;
 
 /**
  * Proxy to send requests to Sentry
@@ -30,24 +30,24 @@ use Magento\Framework\App\PlainTextRequestInterface;
  */
 class Index extends Action implements CsrfAwareActionInterface
 {
-    /** @var Client */
-    private Client $client;
+    /** @var PublisherInterface */
+    private PublisherInterface $publisher;
 
-    /** @var RemoteAddress */
-    private RemoteAddress $remoteAddress;
+    /** @var SentryRequest */
+    private SentryRequest $sentryRequest;
 
     /**
      * @param Context $context
-     * @param Client $client
-     * @param RemoteAddress $remoteAddress
+     * @param PublisherInterface $publisher
+     * @param SentryRequest $sentryRequest
      */
     public function __construct(
         Context $context,
-        Client $client,
-        RemoteAddress $remoteAddress
+        PublisherInterface $publisher,
+        SentryRequest $sentryRequest
     ) {
-        $this->client = $client;
-        $this->remoteAddress = $remoteAddress;
+        $this->publisher = $publisher;
+        $this->sentryRequest = $sentryRequest;
         parent::__construct($context);
     }
 
@@ -72,27 +72,11 @@ class Index extends Action implements CsrfAwareActionInterface
      */
     public function execute()
     {
-        $host = "sentry.io";
         $request = $this->getRequest();
         /** @var PlainTextRequestInterface $request */
         $envelope = $request->getContent();
-        $pieces = explode("\n", $envelope, 2);
-
-        $header = json_decode($pieces[0], true);
-        if (isset($header["dsn"])) {
-            $path = explode('://', $header["dsn"])[1];
-            $path = explode('/', $path)[1];
-            $path = '/' . $path;
-            $projectId = (int) trim($path, "/");
-
-            $this->client->post("https://$host/api/$projectId/envelope/", [
-                'headers' => [
-                    'Content-Type' => 'application/x-sentry-envelope',
-                    'X-Forwarded-For' => $this->remoteAddress->getRemoteAddress()
-                ],
-                'body' => $envelope
-            ]);
-        }
+        $this->sentryRequest->setEnvelope($envelope);
+        $this->publisher->publish('sutunam.sentry.request', $this->sentryRequest);
 
         return $this->getResponse();
     }

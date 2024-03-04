@@ -29,3 +29,13 @@ composer require sutunam/sentry:^0.1
 ### Configurations
 
 Configurations are located in `Stores > Configuration > Web > Sentry`.
+
+### Message Queues
+
+This module uses a message queue to send request to Sentry in the background.
+This prevents the tunnel to overload the webserver.
+To run the consumer, use this command :
+
+```bash
+bin/magento queue:consumers:start sentryRequestHandler
+```
