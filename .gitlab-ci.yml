@@ -15,14 +15,36 @@ copyright:
       - files="$(grep -rL '@copyright.*Sutunam' --include '*.php' src/ || true)";
       - if [ "$(echo "$files" | sed '/^$/d' | wc -l)" -gt '0' ]; then echo "$files"; exit 1; fi
 
-phpstan:
-  script:
-      - php composer.phar run phpstan
+.phpstan:
+    script:
+        - php composer.phar run phpstan
 
-code-analysis:
-  script:
-      - php composer.phar run phpcs
+.phpcs:
+    script:
+        - php composer.phar run phpcs
 
-phpunit:
-  script:
-      - vendor/bin/phpunit
+### PHPCS
+phpcs-php7.4:
+    image: registry.sutunam.com/sutunam/ci/php_ci:7.4
+    extends: .phpcs
+
+phpcs-php8.1:
+    image: registry.sutunam.com/sutunam/ci/php_ci:8.1
+    extends: .phpcs
+
+phpcs-php8.2:
+    image: registry.sutunam.com/sutunam/ci/php_ci:8.2
+    extends: .phpcs
+
+### PHPSTAN
+phpstan-php7.4:
+    image: registry.sutunam.com/sutunam/ci/php_ci:7.4
+    extends: .phpstan
+
+phpstan-php8.1:
+    image: registry.sutunam.com/sutunam/ci/php_ci:8.1
+    extends: .phpstan
+
+phpstan-php8.2:
+    image: registry.sutunam.com/sutunam/ci/php_ci:8.2
+    extends: .phpstan
