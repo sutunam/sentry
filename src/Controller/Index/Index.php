@@ -18,6 +18,7 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\PlainTextRequestInterface;
 use Magento\Framework\MessageQueue\PublisherInterface;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Sutunam\Sentry\Model\Data\SentryRequest;
 
 /**
@@ -36,18 +37,24 @@ class Index extends Action implements CsrfAwareActionInterface
     /** @var SentryRequest */
     private SentryRequest $sentryRequest;
 
+    /** @var RemoteAddress */
+    private RemoteAddress $remoteAddress;
+
     /**
      * @param Context $context
      * @param PublisherInterface $publisher
      * @param SentryRequest $sentryRequest
+     * @param RemoteAddress $remoteAddress
      */
     public function __construct(
         Context $context,
         PublisherInterface $publisher,
-        SentryRequest $sentryRequest
+        SentryRequest $sentryRequest,
+        RemoteAddress $remoteAddress
     ) {
         $this->publisher = $publisher;
         $this->sentryRequest = $sentryRequest;
+        $this->remoteAddress = $remoteAddress;
         parent::__construct($context);
     }
 
@@ -76,6 +83,7 @@ class Index extends Action implements CsrfAwareActionInterface
         /** @var PlainTextRequestInterface $request */
         $envelope = $request->getContent();
         $this->sentryRequest->setEnvelope($envelope);
+        $this->sentryRequest->setCustomerIp($this->remoteAddress->getRemoteAddress());
         $this->publisher->publish('sutunam.sentry.request', $this->sentryRequest);
 
         return $this->getResponse();

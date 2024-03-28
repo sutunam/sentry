@@ -19,6 +19,11 @@ class SentryRequest
     protected $envelope;
 
     /**
+     * @var string
+     */
+    protected $customerIp;
+
+    /**
      * Get envelope content.
      *
      * @return string
@@ -37,5 +42,26 @@ class SentryRequest
     public function setEnvelope($envelope)
     {
         $this->envelope = $envelope;
+    }
+
+    /**
+     * Get customer IP address.
+     *
+     * @return string
+     */
+    public function getCustomerIp(): string
+    {
+        return $this->customerIp;
+    }
+
+    /**
+     * Set customer IP address.
+     *
+     * @param string $ip
+     * @return void
+     */
+    public function setCustomerIp(string $ip): void
+    {
+        $this->customerIp = $ip;
     }
 }

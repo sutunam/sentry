@@ -48,6 +48,12 @@
                     <label>Version</label>
                     <comment>Version used in Sentry versioning. Left empty to use Magento versioning.</comment>
                 </field>
+                <field id="enable_logging" translate="label" type="select" sortOrder="40" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable or disable logging for Sentry requests. Should only enable for development.</comment>
+                </field>
             </group>
         </section>
     </system>

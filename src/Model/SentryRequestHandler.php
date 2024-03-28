@@ -12,8 +12,9 @@
 namespace Sutunam\Sentry\Model;
 
 use GuzzleHttp\Client;
-use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Sutunam\Sentry\Model\Data\SentryRequest;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class SentryRequestHandler
 {
@@ -23,22 +24,30 @@ class SentryRequestHandler
     protected $client;
 
     /**
-     * @var RemoteAddress
+     * @var LoggerInterface
      */
-    protected $remoteAddress;
+    protected $logger;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     /**
      * SentryRequestHandler constructor.
      *
      * @param Client $client
-     * @param RemoteAddress $remoteAddress
+     * @param LoggerInterface $logger
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Client $client,
-        RemoteAddress $remoteAddress
+        LoggerInterface $logger,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->client = $client;
-        $this->remoteAddress = $remoteAddress;
+        $this->logger = $logger;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -50,6 +59,15 @@ class SentryRequestHandler
     public function process(SentryRequest $request): void
     {
         $envelope = $request->getEnvelope();
+        $remoteIp = $request->getCustomerIp();
+
+        if ($this->isLoggingEnabled()) {
+            // Log customer remote IP and envelope data
+            $this->logger->info('Processing Sentry request', [
+                'remote_ip' => $remoteIp,
+                'envelope' => $envelope
+            ]);
+        }
 
         $host = "sentry.io";
         $pieces = explode("\n", $envelope, 2);
@@ -64,10 +82,23 @@ class SentryRequestHandler
             $this->client->post("https://$host/api/$projectId/envelope/", [
                 'headers' => [
                     'Content-Type' => 'application/x-sentry-envelope',
-                    'X-Forwarded-For' => $this->remoteAddress->getRemoteAddress()
+                    'X-Forwarded-For' => $remoteIp
                 ],
                 'body' => $envelope
             ]);
         }
+    }
+
+    /**
+     * Check if logging is enabled.
+     *
+     * @return bool
+     */
+    private function isLoggingEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(
+            'web/sentry/enable_logging',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 }

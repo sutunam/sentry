@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Define a new type of logger handler for info level -->
+    <virtualType name="SutunamSentryInfoLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="info" xsi:type="object">Sutunam\Sentry\Model\Logger\Handle\InfoHandle</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Sutunam\Sentry\Model\SentryRequestHandler">
+        <arguments>
+            <argument name="logger" xsi:type="object">SutunamSentryInfoLogger</argument>
+        </arguments>
+    </type>
+
+</config>
