@@ -2,7 +2,7 @@
   "name": "sutunam/sentry",
   "description": "Sutunam Sentry Module for Magento 2",
   "keywords": ["magento2", "sentry"],
-  "homepage": "https://git.sutunam.com/magento2-extensions/sutunam-sentry",
+  "homepage": "https://en.sutunam.com/",  
   "type": "magento2-module",
   "version": "0.1.5",
   "require": {
@@ -16,8 +16,14 @@
     "phpstan/phpstan": "^1.10",
     "phpstan/extension-installer": "^1.3",
     "magento/magento-coding-standard": "^31.0"
-  },
-  "license": [ "proprietary" ],
+  },  
+  "license": "LGPL",
+  "authors": [
+    {
+      "name": "Magento 2 Sutunam Sentry Module",
+      "homepage": "https://git.sutunam.com/magento2-extensions/sutunam-sentry"
+    }
+  ],
   "autoload": {
     "files": [ "src/registration.php" ],
     "psr-4": {
