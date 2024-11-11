@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="web">
+            <group id="sentry" translate="label" type="text" sortOrder="300"
+                showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sentry</label>
+                <field id="environment" translate="label" type="text" sortOrder="0" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Environment</label>
+                    <comment>
+                        <![CDATA[
+                                 Required to show script.<br/>
+                                 Sentry
+                                 <a
+                                 href="https://docs.sentry.io/platforms/javascript/configuration/options/#environment"
+                                 target="_blank">environment</a>
+                        ]]>
+                    </comment>
+                </field>
+                <field id="dsn" translate="label" type="text" sortOrder="10" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>DSN</label>
+                    <comment>
+                        <![CDATA[
+                                 Required to show script.<br/>
+                                 On Sentry, go to "Settings / SDK Setup / Client Keys (DSN)" and copy-paste DSN
+                        ]]>
+                    </comment>
+                </field>
+                <field id="project_name" translate="label" type="text" sortOrder="20"
+                    showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Project name</label>
+                    <comment>
+                        <![CDATA[
+                                 Required to show script.<br/>
+                                 Package name used in Sentry versioning
+                                 (<a
+                                    href="https://docs.sentry.io/platforms/javascript/configuration/releases/"
+                                    target="_blank">doc</a>)
+                        ]]>
+                    </comment>
+                </field>
+                <field id="version" translate="label" type="text" sortOrder="30" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Version</label>
+                    <comment>Version used in Sentry versioning. Left empty to use Magento versioning.</comment>
+                </field>
+                <field id="enable_logging" translate="label" type="select" sortOrder="40" showInDefault="1"
+                    showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable or disable logging for Sentry requests. Should only enable for development.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

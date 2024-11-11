@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="sentryRemoteAddress" type="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
+        <arguments>
+            <argument name="alternativeHeaders" xsi:type="array">
+                <item name="forwarded_for" xsi:type="string">HTTP_X_FORWARDED_FOR</item>
+                <item name="real_ip" xsi:type="string">HTTP_X_REAL_IP</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Sutunam\Sentry\Controller\Index\Index">
+        <arguments>
+            <argument name="remoteAddress" xsi:type="object">sentryRemoteAddress</argument>
+        </arguments>
+    </type>
+</config>

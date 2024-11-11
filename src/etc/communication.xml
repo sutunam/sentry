@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-communication.xsd">
+    <topic name="sutunam.sentry.request" request="Sutunam\Sentry\Model\Data\SentryRequest">
+        <handler name="sentryRequestHandler" type="Sutunam\Sentry\Model\SentryRequestHandler" method="process"/>
+    </topic>
+</config>

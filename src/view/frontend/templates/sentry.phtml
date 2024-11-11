@@ -1,0 +1,35 @@
+<?php
+/*
+ * Sutunam
+ *
+ * @copyright Copyright (c) 2023 Sutunam (https://www.sutunam.com/)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/** @var \Sutunam\Sentry\Block\Sentry $block */
+?>
+
+
+<?php if ($block->canShowTag()): ?>
+    <script src="<?= $escaper->escapeUrl($block->getViewFileUrl('Sutunam_Sentry::js/sentry.7.36.min.js')) ?>"
+            integrity="sha384-yOwcO3gcLQCYgPKCSjGSA+KQvWOce9kc/Cjs5LnQhAy+OusjkGgXWkJlA5QxWey7"
+            crossorigin="anonymous"
+    ></script>
+
+    <script>
+     Sentry.init({
+         environment: <?= /* @noEscape */ '"' . $block->getEnvironment() . '"' ?>,
+         dsn: <?= /* @noEscape */ '"' . $block->getDsn() . '"' ?>,
+         tunnel: "/sentry",
+         release: <?= /* @noEscape */ '"' . $block->getRelease() . '"' ?>,
+         tracesSampleRate: 1.0,
+     });
+    <?php if ($block->isCustomerLoggedIn()): ?>
+        Sentry.setUser({
+            id: <?= /* @noEscape */ '"' . $block->getCustomerId() . '"' ?>,
+        });
+    <?php endif; ?>
+    </script>
+<?php endif; ?>
