@@ -8,16 +8,17 @@ Add a Magento controller to act as a [tunnel](https://docs.sentry.io/platforms/j
 
 ## Installation
 
-### Github
-
-https://github.com/sutunam/sentry.git
-
 ### Composer
 
 Require the package:
 
 ```bash
 composer require sutunam/sentry
+```
+
+Re-build Magento
+```bash
+bin/magento setup:upgrade && bin/magento setup:di:compile && bin/magento setup:static-content:deploy
 ```
 
 ### Configurations
@@ -33,3 +34,9 @@ To run the consumer, use this command :
 ```bash
 bin/magento queue:consumers:start sentryRequestHandler
 ```
+
+## Development by Sutunam
+
+We are an Open Source Software Development Company, specialized in Magento 2 and [Hyva Silver Partner](https://en.sutunam.vn/solutions/hyva-specialists-magento-experts/)
+
+[Contact us](https://en.sutunam.vn/contact/)

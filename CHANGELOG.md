@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.8 - 2024-12-04
+* Update README
+
+## 0.1.7 - 2024-12-03
+* Update module's information
+
 ## 0.1.6 - 2024-10-22
 * Update module's information
 
