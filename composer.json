@@ -1,10 +1,10 @@
 {
-  "name": "sutunam/sentry",
+  "name": "sutunam/module-sentry",
   "description": "Sutunam Sentry Module for Magento 2",
   "keywords": ["magento2", "sentry"],
   "homepage": "https://en.sutunam.com/",  
   "type": "magento2-module",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "require": {
     "php": "^7.4 || ^8.1",
     "magento/framework": "~100.0||~101.0||~102.0||~103.0",
@@ -21,7 +21,7 @@
   "authors": [
     {
       "name": "Magento 2 Sutunam Sentry Module",
-      "homepage": "https://git.sutunam.com/magento2-extensions/sutunam-sentry"
+      "homepage": "https://git.sutunam.com/magento2-extensions/module-sentry"
     }
   ],
   "autoload": {
